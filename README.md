@@ -163,6 +163,79 @@ In Telligent: Pencil at top left > `Administration` > `Integrations` > `Webhooks
 
 ### Finish the Logic App
 
+In `When a HTTP request is received` > `Request Body JSON Schema`, paste:
+
+```
+{
+    "properties": {
+        "events": {
+            "items": {
+                "properties": {
+                    "DateOccurred": {
+                        "type": "string"
+                    },
+                    "EventData": {
+                        "properties": {
+                            "ActorUserId": {
+                                "type": "integer"
+                            },
+                            "BlogId": {
+                                "type": "integer"
+                            },
+                            "BlogPostId": {
+                                "type": "integer"
+                            },
+                            "CommentId": {
+                                "type": "string"
+                            },
+                            "ContentId": {
+                                "type": "string"
+                            },
+                            "ContentTypeId": {
+                                "type": "string"
+                            },
+                            "ForumId": {
+                                "type": "integer"
+                            },
+                            "ForumReplyId": {
+                                "type": "integer"
+                            },
+                            "ForumThreadId": {
+                                "type": "integer"
+                            },
+                            "GalleryId": {
+                                "type": "integer"
+                            },
+                            "MediaId": {
+                                "type": "integer"
+                            },
+                            "WikiId": {
+                                "type": "integer"
+                            },
+                            "WikiPageId": {
+                                "type": "integer"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "TypeId": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "TypeId",
+                    "DateOccurred",
+                    "EventData"
+                ],
+                "type": "object"
+            },
+            "type": "array"
+        }
+    },
+    "type": "object"
+}
+```
+
 In the Logic App, add an Azure Function item and select `content`. Make sure the Logic App is not turned off.
 
 ![logic-app](https://user-images.githubusercontent.com/15255009/118200730-0ff49e80-b413-11eb-80c5-0b977f2f4aa3.png)
