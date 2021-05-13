@@ -168,7 +168,7 @@ In the Logic App, add an Azure Function item and select `content`. Make sure the
 ![logic-app](https://user-images.githubusercontent.com/15255009/118200730-0ff49e80-b413-11eb-80c5-0b977f2f4aa3.png)
 
 ## Troubleshooting
-- **If it starts erroring out unexpectedly, restart it in the Azure portal.
+- If it starts erroring out unexpectedly, restart it in the Azure portal.
 - https://stackoverflow.com/questions/54085156/azure-function-triggered-by-webhook-performs-action-on-compounding-list-of-histo
 - https://stackoverflow.com/questions/53972297/how-to-determine-why-an-azure-function-app-is-not-triggered-by-a-webhook
 - Make sure you have installed _all_ the packages at root, including `moment` and `moment-timezone`.
