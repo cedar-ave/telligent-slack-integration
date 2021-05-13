@@ -16,7 +16,7 @@ Both child functions use the `slackify-html` npm package, modified for this func
 Comment events are included in the webhook, but the JSON sent is in a different format than other content events (see examples below) and is handled uniquely in the code.
 
 ### Azure Logic App trigger
-The Azure Function provides an endpoint that can be used with the webhook. After a few days the Function stops posting to Slack, despite experiments with consumption vs. non-consumption plans and other setup options. (See [Azure Function output](#azure-function-output) for unused code.) For this reason an Azure Logic App in the same resource group is used as the endpoint. When a telligent HTTP post is received, it triggers the `content` child Function.
+The Azure Function provides an endpoint that can be used with the webhook. After a few days the Function stops posting to Slack, despite experiments with consumption vs. non-consumption plans and other setup options. (See [Azure Function output](#azure-function-output) for unused code.) For this reason an Azure Logic App in the same resource group is used as the endpoint. When a telligent HTTP post is received, it triggers the `content` child Function. See [Azure Logic App](#azure-logic-app) for setup details.
 
 ### Function details
 - Type: http trigger
