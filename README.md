@@ -121,7 +121,7 @@ IncludeFields=Url,Content.CreatedByUser.Id
 ```
 
 ### Azure Function output
-To output JSON (this code is not in use - see [#azure-logic-app-trigger](Azure Logic app trigger)):
+To output JSON (this code is not in use - see [Azure Logic app trigger](#azure-logic-app-trigger)):
 
 ```
 var readyString = "<" + profileUrlNoQuotes + "|" + usernameNoQuotes + "> posted " + "<" + urlNoQuotes + "|" + subjectNoQuotes + ">\n" + trimmedString;
@@ -133,11 +133,11 @@ var readyString = "<" + profileUrlNoQuotes + "|" + usernameNoQuotes + "> posted 
 ```
 
 ### Shared code
-Create a folder at root called "Shared" and a file of shared code (in this case, `slackify-html.js`).
+Create a folder at root called **Shared** and a file of shared code (in this case, `slackify-html.js`).
 
 (If working in the Azure Functions UI rather than in the VS Code Azure Functions extension, use Kudu > **site** > **wwwroot**.)
 
-Add `watchDirectories` to host.json (if working in the Azure Functions UI, do this in Function App Settings):
+Add `watchDirectories` to host.json (if working in the Azure Functions UI, do this in Function App settings):
 
 ```
 {
@@ -160,4 +160,4 @@ In the Azure Function `index.js` file, reference the shared code:
 - **If it starts erroring out unexpectedly, restart it in the Azure portal.
 - https://stackoverflow.com/questions/54085156/azure-function-triggered-by-webhook-performs-action-on-compounding-list-of-histo
 - https://stackoverflow.com/questions/53972297/how-to-determine-why-an-azure-function-app-is-not-triggered-by-a-webhook
-- Make sure you have installed _all_ the packages at root, including moment and moment-timezone.
+- Make sure you have installed _all_ the packages at root, including `moment` and `moment-timezone`.
