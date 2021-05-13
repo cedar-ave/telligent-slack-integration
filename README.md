@@ -16,7 +16,7 @@ Both child functions use the `slackify-html` npm package, modified for this func
 Comment events are included in the webhook, but the JSON sent is in a different format than other content events (see examples below) and is handled uniquely in the code.
 
 ### Azure Logic App trigger
-The Azure Function provides an endpoint that can be used with the webhook. After a few days the Function stops posting to Slack, despite experiments with consumption vs. non-consumption plans and other setup options. For this reason an Azure Logic App in the same resource group is used as the endpoint. When an HTTP request is received, it triggers the `content` child Function.
+The Azure Function provides an endpoint that can be used with the webhook. After a few days the Function stops posting to Slack, despite experiments with consumption vs. non-consumption plans and other setup options. (See [Azure Function output](#azure-function-output) for unused code.) For this reason an Azure Logic App in the same resource group is used as the endpoint. When a telligent HTTP post is received, it triggers the `content` child Function.
 
 ### Function details
 - Type: http trigger
@@ -64,9 +64,6 @@ The Azure Function provides an endpoint that can be used with the webhook. After
 
 ### Gotcha on wiki `ContainerId`s
 [ContainersIds](#groups-vs-containers) are roughly equivalent to `GroupId`s. This is explained in the reference below. However, _comment on wikis_ are not included in a group's `ContainerId`. For this reason, in the block of `if (containerId == ` clauses (which split which webhook events are posted in which Slack channel(s)), a clause must be added for the `ContainerId` specific to the wiki.
-
-### Set up webhook
-Telligent > Pencil at top left > `Administration` > `Integrations` > `Webhooks`
 
 ## `ideas` Function
 - Type: Timer trigger
@@ -155,6 +152,18 @@ In the Azure Function `index.js` file, reference the shared code:
 ```
 
 - https://stackoverflow.com/questions/54015261/reference-external-script-in-javascript-azure-function-code
+
+## Azure Logic App
+Put it in the same resource group as the Function.
+
+### Set up webhook
+Create an Azure Logic App and add the `When a HTTP request is received` item. Save. Copy the `HTTP POST URL`.
+
+In Telligent: Pencil at top left > `Administration` > `Integrations` > `Webhooks` > Add URL you just copied
+
+Add an Azure Function and select `content`.
+
+![logic-app](https://user-images.githubusercontent.com/15255009/118199939-59dc8500-b411-11eb-98ab-7a5671b0749e.png)
 
 ## Troubleshooting
 - **If it starts erroring out unexpectedly, restart it in the Azure portal.
