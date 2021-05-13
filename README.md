@@ -165,7 +165,7 @@ In Telligent: Pencil at top left > `Administration` > `Integrations` > `Webhooks
 
 In the Logic App, add an Azure Function item and select `content`. Make sure the Logic App is not turned off.
 
-![logic-app](https://user-images.githubusercontent.com/15255009/118200656-e2a7f080-b412-11eb-97a9-40fab189baa2.png)
+![logic-app](https://user-images.githubusercontent.com/15255009/118200730-0ff49e80-b413-11eb-80c5-0b977f2f4aa3.png)
 
 ## Troubleshooting
 - **If it starts erroring out unexpectedly, restart it in the Azure portal.
