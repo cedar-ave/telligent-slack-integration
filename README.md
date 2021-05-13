@@ -156,14 +156,16 @@ In the Azure Function `index.js` file, reference the shared code:
 ## Azure Logic App
 Put it in the same resource group as the Function.
 
-### Set up webhook
+### Set up webhook in Telligent
 Create an Azure Logic App and add the `When a HTTP request is received` item. Save. Copy the `HTTP POST URL`.
 
 In Telligent: Pencil at top left > `Administration` > `Integrations` > `Webhooks` > Add URL you just copied
 
-Add an Azure Function and select `content`.
+### Finish the Logic App
 
-![logic-app](https://user-images.githubusercontent.com/15255009/118199939-59dc8500-b411-11eb-98ab-7a5671b0749e.png)
+In the Logic App, add an Azure Function item and select `content`. Make sure the Logic App is not turned off.
+
+![logic-app](img width="200" https://user-images.githubusercontent.com/15255009/118199939-59dc8500-b411-11eb-98ab-7a5671b0749e.png)
 
 ## Troubleshooting
 - **If it starts erroring out unexpectedly, restart it in the Azure portal.
