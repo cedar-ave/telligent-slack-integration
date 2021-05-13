@@ -1,5 +1,5 @@
 # Telligent-Slack integration in an Azure Function
-> Sends notifications of activity in Telligent to Slack channels
+> An Azure Function that sends notifications of activity in Telligent to Slack
 
 ## Functions
 The parent Function (`telligent-slack`) contains two child functions:
