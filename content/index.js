@@ -140,28 +140,14 @@ module.exports = function (context, data) {
         request(theRequest, function (error, response, body) {});
       }
 
-      //Group aka Container = "Product feedback"
-      if (containerId == "CONTAINERID") {
-        var urlWebHook =
-          "SLACKINCOMINGWEBHOOK";
-        sendToSlack();
-      }
-
-      //Group aka Container = "Council"
-      if (containerId == "CONTAINERID") {
-        var urlWebHook =
-          "SLACKINCOMINGWEBHOOK";
-        sendToSlack();
-      }
-
-      //Group aka Container = "Internal"
-      if (containerId == "CONTAINERID") {
-        var urlWebHook =
-          "SLACKINCOMINGWEBHOOK";
-        sendToSlack();
-      }
-
       //Group aka Container = "Customers"
+      if (containerId == "CONTAINERID") {
+        var urlWebHook =
+          "SLACKINCOMINGWEBHOOK";
+        sendToSlack();
+      }
+
+      //Group aka Container = "Employees"
       if (containerId == "CONTAINERID") {
         var urlWebHook =
           "SLACKINCOMINGWEBHOOK";
