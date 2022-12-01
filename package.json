@@ -1,11 +1,17 @@
 {
-    "name": "telligent-slack",
-    "version": "0.1.0",
-    "dependencies": {
-      "request": "*",
-      "slackify-html": "*",
-      "moment": "*",
-      "moment-timezone": "*",
-      "html-entities": "*"
-    }
+  "name": "function name",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"No tests yet...\""
+  },
+  "dependencies": {
+    "request": "*",
+    "slackify-html": "*",
+    "moment": "*",
+    "moment-timezone": "*",
+    "html-entities": "*",
+    "node-fetch": "*"
+  },
+  "devDependencies": {}
 }
