@@ -4,7 +4,7 @@
   "logging": {
     "fileLoggingMode": "always",
     "logLevel": {
-      "Function.telligent-content": "Debug",
+      "Function.function-name": "Debug",
       "default": "Debug"
     }
   },
