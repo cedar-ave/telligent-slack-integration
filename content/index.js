@@ -1,4 +1,4 @@
-//This function receives Telligent webhook events and transforms them to Slack posts.
+//This function receives Verint webhook events and transforms them to posts in Slack and/or Microsoft Teams.
 
 //Prerequisite: in Kudu > CMD prompt > navigate to site root (where package.json is) > `npm install`
 //Prerequisite: Slack emojis and their codes (e.g., :smile:)
@@ -26,7 +26,7 @@ module.exports = function (context, data) {
 
     if (CommentId) {
       options.url =
-        "https://community.organization.com/api.ashx/v2/comments/" +
+        "https://community.ORGANIZATION.com/api.ashx/v2/comments/" +
         CommentId +
         ".json";
       options.headers = {
@@ -35,7 +35,7 @@ module.exports = function (context, data) {
       };
     } else {
       options.url =
-        "https://community.organization.com/api.ashx/v2/genericcontent/" +
+        "https://community.ORGANIZATION.com/api.ashx/v2/genericcontent/" +
         ContentId +
         "/" +
         ContentTypeId +
@@ -53,23 +53,15 @@ module.exports = function (context, data) {
       if (!error && response.statusCode == 200) {
         var info = JSON.parse(body);
 
+        var username, profileUrl, subject, url, text, containerId;
+
         //For all content types but comments
-        var username, profileUrl, subject, url, text;
         if (info.hasOwnProperty("Content")) {
           username = info.Content.CreatedByUser.DisplayName;
           profileUrl = info.Content.CreatedByUser.ProfileUrl;
           subject = info.Content.HtmlName;
           url = info.Content.Url;
           text = info.Content.HtmlDescription;
-          if (event.EventData.hasOwnProperty("ForumId"))
-            subject = ":question:  " + info.Content.HtmlName;
-          if (event.EventData.hasOwnProperty("WikiId"))
-            subject = ":doc:  " + info.Content.HtmlName;
-          if (event.EventData.hasOwnProperty("BlogId"))
-            subject = ":blog:  " + info.Content.HtmlName;
-          if (event.EventData.hasOwnProperty("GalleryId"))
-            subject = ":file:  " + info.Content.HtmlName;
-
           containerId = info.Content.Application.Container.ContainerId;
         }
 
@@ -77,10 +69,9 @@ module.exports = function (context, data) {
         if (info.hasOwnProperty("Comment")) {
           username = info.Comment.User.DisplayName;
           profileUrl = info.Comment.User.ProfileUrl;
-          subject = ":discuss:  Re: " + info.Comment.Content.HtmlName;
+          subject = info.Comment.Content.HtmlName;
           url = info.Comment.Content.Url;
           text = info.Comment.Body;
-
           containerId = info.Comment.Content.Application.Container.ContainerId;
         }
       }
@@ -102,7 +93,6 @@ module.exports = function (context, data) {
 
       //Limit character length
       var trimmedString = noLineBreak.substring(0, 325);
-
       //Do not cut off in the middle of a word
       readyString = trimmedString.substr(
         0,
@@ -111,7 +101,7 @@ module.exports = function (context, data) {
 
       //Send to Slack
       function sendToSlack(theUsername, theIconEmoji) {
-        var theUsername = "Telligent Bot";
+        var theUsername = "Verint Bot";
         var theIconEmoji = ":bot:";
 
         var payload = {
@@ -140,26 +130,51 @@ module.exports = function (context, data) {
         request(theRequest, function (error, response, body) {});
       }
 
-      //Group aka Container = "Customers"
-      if (containerId == "CONTAINERID") {
-        var urlWebHook =
-          "SLACKINCOMINGWEBHOOK";
-        sendToSlack();
+      //Send to Microsoft Teams
+      function msteams() {
+        context.res = {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: {
+            team: msTeamsTeamId,
+            channel: msTeamsChannelId,
+            name: username,
+            profileUrl: profileUrl,
+            title: title,
+            link: url,
+            text: readyString,
+          },
+        };
+        context.done();
       }
 
-      //Group aka Container = "Employees"
-      if (containerId == "CONTAINERID") {
-        var urlWebHook =
-          "SLACKINCOMINGWEBHOOK";
+      // Customize recipients
+      // Verint Group aka Container = "Customers"
+
+      // Send to Slack channel
+      if (containerId == "VERINT CONTAINER ID") {
+        var urlWebHook = "SLACK INCOMING WEBHOOK URL";
         sendToSlack();
+
+      // Send to Microsoft Teams channel
+      var msTeamsTeamId = "MICROSOFT TEAM ID";
+      var msTeamsChannelId = "MICROSOFT TEAM CHANNEL ID";
+        msteams();
+      }
+
+      //Verint group aka Container = "Employees"
+      if (containerId == "CONTAINER ID") {
+        var urlWebHook = "SLACK INCOMING WEBHOOK";
+        sendToSlack();
+
+      // Send to Microsoft Teams channel
+      var msTeamsTeamId = "MICROSOFT TEAM ID";
+      var msTeamsChannelId = "MICROSOFT TEAM CHANNEL ID";
+        msteams();
       }
     }
     request(options, callback);
   }
-
-  // Response of the function
-  context.res = {
-    body: "success",
-  };
-  context.done();
 };
