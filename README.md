@@ -1,25 +1,27 @@
-# Telligent-Slack integration in an Azure Function
-> An Azure Function that sends notifications of activity in Telligent to Slack
+# Verint to Slack and/or Microsoft Teams integration in an Azure Function
+> An Azure Function that sends notifications of content activity in Verint to Slack, e.g., blog posts, videos, questions, ideas, etc.
+
+![slack-notification](https://user-images.githubusercontent.com/15255009/205156526-b6409951-e7b6-4037-9e80-d1e609df5046.png)
 
 ## Functions
-The parent Function (`telligent-slack`) contains two child functions:
+The parent Function (`your-function`) contains two child functions:
 - `content`
 - `ideas`
 
-Telligent provides a webhook that sends selected events to an endpoint. These events do not include ideas. (A feature request is logged with Telligent: https://community.telligent.com/community/10/f/ask-the-community/1146446/rest-api-return-results-for-specified-time-period).
+Verint provides a webhook that sends generic content events to an endpoint. These events do not include ideas. (A feature request is logged with Verint: https://community.telligent.com/community/10/f/ask-the-community/1146446/rest-api-return-results-for-specified-time-period).
 
 Both child functions use the `slackify-html` npm package, modified for this function in `Shared/slackify-html.js`, to transform processed content into Slack posts in Slack syntax (Slack does not accept the _HTML format_ returned in the content body field of the webhook payload) and, depending on the group or container they occurred in, send the posts to designated Slack channels.
 - https://stackoverflow.com/questions/53925981/is-there-a-better-way-to-turn-html-to-plain-text-in-javascript-than-a-series-of
 - https://stackoverflow.com/questions/53698843/replacing-quot-with-using-common-methods-does-not-work-in-a-javascript-azure
 
 ## `content` Function
-Comment events are included in the webhook, but the JSON sent is in a different format than other content events (see examples below) and is handled uniquely in the code.
+Note: Comment events are included in the webhook, but the JSON sent is in a different format than other content events (see examples below) and is handled uniquely in the code.
 
 ### Azure Logic App trigger
 The Azure Function provides an endpoint that can be used with the webhook. After a few days the Function stops posting to Slack, despite experiments with consumption vs. non-consumption plans and other setup options. (See [Azure Function output](#azure-function-output) for unused code.) For this reason an Azure Logic App in the same resource group is used as the endpoint. When a telligent HTTP post is received, it triggers the `content` child Function. See [Azure Logic App](#azure-logic-app) for setup details.
 
 ### Function details
-- Type: http trigger
+- Type: `http trigger`
 - For selected events as determined in the webhooks section of the Telligent `Admininstration` > `Integrations` > `Webhooks` panel
 - Selected events include both new content and updated media
 - Loops through events because multiples can be sent at once
