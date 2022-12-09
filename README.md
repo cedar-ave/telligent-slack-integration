@@ -138,7 +138,7 @@ The parent Azure Function (`your-function`) contains two child Azure Functions:
 
 Verint provides [a Generic Content](https://community.telligent.com/community/11/w/api-documentation/64684/generic-content-rest-endpoints) REST API webhook that sends generic content events to an endpoint. These events do not include ideas.[^1]
 
-Both child Azure Functions use the `slackify-html` npm package, modified for this Azure Function in `Shared/slackify-html.js`, to transform processed content into Slack posts in Slack syntax (Slack does not accept the HTML format returned in the content body field of the webhook payload) and, depending on the group or container they occurred in, send the posts to designated Slack and/or Microsoft Teams channels. (Microsoft Teams also accepts the content transformed for Slack.)[^2] [^3]
+Both child Azure Functions use the `slackify-html` npm package, modified for this Azure Function in `Shared/slackify-html.js`, to transform processed content into Slack posts in Slack syntax (Slack does not accept the HTML format returned in the content body field of the webhook payload) and, depending on the group or container they occurred in, send the posts to designated Slack and/or Microsoft Teams channels. (Microsoft Teams also accepts the content transformed for Slack.)[^2][^3]
 
 ## `content` Azure Function
 
@@ -151,7 +151,7 @@ The Azure Function provides an endpoint that can be used with the webhook.[^4] W
 - Type: `http trigger`
 - For selected events as determined in the webhooks section of the Verint `Admininstration` > `Integrations` > `Webhooks` panel
 - Selected events include both new content and updated media
-- Loops through events because multiples can be sent at once[^5] [^6]
+- Loops through events because multiples can be sent at once[^5][^6]
 - Treats general content events and comments differently because `ContentId` and `ContentTypeId` are returned with general content events whereas comments include only a `CommentId`:
 
 #### General content
@@ -202,20 +202,20 @@ Note: `Comment` events are included in the webhook, but the JSON sent is in a di
 - Type: `Timer trigger`
 - Executes every 10 minutes
 - Queries the REST API for ideas posted in the past 10 minutes
-- Aligns webhook and local timestamps using the `moment` and `moment-timezone` npm packages[^8] [^9]
+- Aligns webhook and local timestamps using the `moment` and `moment-timezone` npm packages[^8][^9]
 
 ## Reference
 
 ### `ideas` Azure Function
 
-- The cron schedule (set in `ideas/function.json`) is `59 9,19,29,39,49,59 * * * *`. [^11]
-- JavaScript code sources for Slack posts: [^12] [^13]
+- The cron schedule (set in `ideas/function.json`) is `59 9,19,29,39,49,59 * * * *`.[^11]
+- JavaScript code sources for Slack posts:[^12][^13]
 
 ### Groups vs. containers
 
 - An idea call through REST API returns `GroupId`.
 - A Verint webhook event does not return `GroupId`, only `ContainerId`.
-- Containers vs. groups[^14] [^15]
+- Containers vs. groups[^14][^15]
 
 ### Queries
 
@@ -355,25 +355,25 @@ This schema code represents `When a HTTP request is received` > `Request Body JS
 ## Troubleshooting
 
 - Make sure the Azure Logic App is not turned off.
-- If the Azure Function starts erroring out unexpectedly, restart it in the Azure portal.[^16] [^17]
+- If the Azure Function starts erroring out unexpectedly, restart it in the Azure portal.[^16][^17]
 - Make sure you have installed all the packages at root, including `moment` and `moment-timezone`.
 
 ## Notes
 
-[^1] A feature request is logged with Verint: https://community.telligent.com/community/10/f/ask-the-community/1146446/rest-api-return-results-for-specified-time-period
-[^2] https://stackoverflow.com/questions/53925981/is-there-a-better-way-to-turn-html-to-plain-text-in-javascript-than-a-series-of
-[^3] https://stackoverflow.com/questions/53698843/replacing-quot-with-using-common-methods-does-not-work-in-a-javascript-azure
-[^4] After a few days the Function stops posting to Slack, despite experiments with consumption vs. non-consumption plans and other setup options. (See [Azure Function output](#azure-function-output) for unused code.) For this reason an Azure Logic App in the same resource group is used as the endpoint.
-[^5] https://community.telligent.com/community/10/f/ask-the-community/1146487/multiple-events-sent-at-once-with-webhook
-[^6] https://stackoverflow.com/questions/54082871/javascript-loop-to-accommodate-filtered-array-of-objects-received-from-a-webhook
-[^7] https://stackoverflow.com/questions/53990376/process-two-nearly-identical-json-blocks-with-one-set-of-code
-[^8] https://stackoverflow.com/questions/53891951/conflicting-timestamps-in-javascript-azure-function
-[^9] https://stackoverflow.com/questions/53753338/if-statement-inside-javascript-azure-function-not-working
-[^10] https://stackoverflow.com/questions/53916782/run-azure-function-every-10-minutes-starting-at-1-second-before-each-00x0
-[^11] https://gist.github.com/scripting/2ab9b6f1f38fe699e451
-[^12] https://gist.github.com/csepulv/7174b19c1fbe219f057f1c89b1abc806
-[^13] https://community.telligent.com/community/10/f/ask-the-community/1146502/container-vs-group-in-rest-api
-[^14] https://community.telligent.com/community/10/f/ask-the-community/1146503/lists-of-containertypeid-applicationtypeid-contenttypeid-etc
-[^15] https://stackoverflow.com/questions/54015261/reference-external-script-in-javascript-azure-function-code
-[^16] https://stackoverflow.com/questions/54085156/azure-function-triggered-by-webhook-performs-action-on-compounding-list-of-histo
-[^17] https://stackoverflow.com/questions/53972297/how-to-determine-why-an-azure-function-app-is-not-triggered-by-a-webhook
+[^1]: A feature request is logged with Verint: https://community.telligent.com/community/10/f/ask-the-community/1146446/rest-api-return-results-for-specified-time-period
+[^2]: https://stackoverflow.com/questions/53925981/is-there-a-better-way-to-turn-html-to-plain-text-in-javascript-than-a-series-of
+[^3]: https://stackoverflow.com/questions/53698843/replacing-quot-with-using-common-methods-does-not-work-in-a-javascript-azure
+[^4]: After a few days the Function stops posting to Slack, despite experiments with consumption vs. non-consumption plans and other setup options. (See [Azure Function output](#azure-function-output) for unused code.) For this reason an Azure Logic App in the same resource group is used as the endpoint.
+[^5]: https://community.telligent.com/community/10/f/ask-the-community/1146487/multiple-events-sent-at-once-with-webhook
+[^6]: https://stackoverflow.com/questions/54082871/javascript-loop-to-accommodate-filtered-array-of-objects-received-from-a-webhook
+[^7]: https://stackoverflow.com/questions/53990376/process-two-nearly-identical-json-blocks-with-one-set-of-code
+[^8]: https://stackoverflow.com/questions/53891951/conflicting-timestamps-in-javascript-azure-function
+[^9]: https://stackoverflow.com/questions/53753338/if-statement-inside-javascript-azure-function-not-working
+[^10]: https://stackoverflow.com/questions/53916782/run-azure-function-every-10-minutes-starting-at-1-second-before-each-00x0
+[^11]: https://gist.github.com/scripting/2ab9b6f1f38fe699e451
+[^12]: https://gist.github.com/csepulv/7174b19c1fbe219f057f1c89b1abc806
+[^13]: https://community.telligent.com/community/10/f/ask-the-community/1146502/container-vs-group-in-rest-api
+[^14]: https://community.telligent.com/community/10/f/ask-the-community/1146503/lists-of-containertypeid-applicationtypeid-contenttypeid-etc
+[^15]: https://stackoverflow.com/questions/54015261/reference-external-script-in-javascript-azure-function-code
+[^16]: https://stackoverflow.com/questions/54085156/azure-function-triggered-by-webhook-performs-action-on-compounding-list-of-histo
+[^17]: https://stackoverflow.com/questions/53972297/how-to-determine-why-an-azure-function-app-is-not-triggered-by-a-webhook
