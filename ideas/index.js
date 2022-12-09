@@ -131,7 +131,7 @@ module.exports = async function (context, myTimer) {
         //Compare timestamps - if the 10 minute matches, then print
         if (ideaTimeStampCut == functionTimeStampCut) {
           //Verint group aka container = Customers
-          if (result[i].Challenge.Group.Id == GROUPID) {
+          if (result[i].Challenge.Group.Id == VERINTGROUPID) {
             var urlWebHook = "SLACK INCOMING WEBHOOK";
             sendToSlack();
 
@@ -142,7 +142,7 @@ module.exports = async function (context, myTimer) {
           }
 
           //Verint group aka container = Employees
-          if (result[i].Challenge.Group.Id == GROUPID) {
+          if (result[i].Challenge.Group.Id == VERINTGROUPID) {
             var urlWebHook = "SLACK INCOMING WEBHOOK";
             sendToSlack();
 

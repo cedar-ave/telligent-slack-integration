@@ -154,7 +154,7 @@ module.exports = function (context, data) {
       // Verint Group aka Container = "Customers"
 
       // Send to Slack channel
-      if (containerId == "VERINT GROUP ID") {
+      if (containerId == VERINTGROUPID) {
         var urlWebHook = "SLACK INCOMING WEBHOOK URL";
         sendToSlack();
 
@@ -165,7 +165,7 @@ module.exports = function (context, data) {
       }
 
       //Verint group aka Container = "Employees"
-      if (containerId == "VERINT GROUP ID") {
+      if (containerId == VERINTGROUPID) {
         var urlWebHook = "SLACK INCOMING WEBHOOK";
         sendToSlack();
 
