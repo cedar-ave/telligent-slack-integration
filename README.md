@@ -125,6 +125,7 @@ https://teams.microsoft.com/l/channel/00%0x00x00000xx0x00xx00xx0x000x00000%00thr
 ```
 
 | Variable | Corresponding ID in the link | Example |
+|----------|------------------------------|---------|
 | `MICROSOFT CHANNEL ID` | Characters following `channel` | `00:0x00x00000xx0x00xx00xx0x000x00000%00@thread.skype` (note that the HTML in the URL is replaced by the actual characters) | Characters following `groupId` | 
 | `MICROSOFT TEAM ID` | `xx000x00-0xx0-0x0x-0000-x0xx0000000x` |
 
